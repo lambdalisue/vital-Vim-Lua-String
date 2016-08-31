@@ -1,0 +1,13 @@
+Describe Vim.Lua.String
+  Before
+    let LuaString = vital#vital#import('Vim.Lua.String')
+  End
+
+  Describe .expose()
+    It add 'vital_lua_string' module in a global lua context
+      call LuaString.expose()
+      Assert Equals(luaeval('vital_vim_lua_string.strwidth("あいう")'), 6)
+      Assert Equals(luaeval('vital_vim_lua_string.strchars("あいう")'), 3)
+    End
+  End
+End

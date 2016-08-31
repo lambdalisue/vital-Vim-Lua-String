@@ -1,0 +1,62 @@
+*vital-vim-lua-string.txt*	Vim compatible string method in lua context
+
+Version: 0.1.0
+Author : Alisue <lambdalisue@hashnote.net>
+License: MIT license
+
+
+=============================================================================
+CONTENTS				*Vital.Vim.Lua.String*
+
+
+=============================================================================
+INTRODUCTION				*Vital.Vim.Lua.String-introduction*
+
+A module to enable native |strwidth()| and |strchars()| in lua context.
+It prefer to use "width()" and "len" method of "luautf8"[1] module to compute
+the number of columns and the number of character respectively.
+It fallback to |strwidth()| and |strchars()| when "luautf8" is not available.
+
+[1] https://github.com/starwing/luautf8
+
+Using "luautf8" will improve the performance approx. x4. The following is a
+result of benchmark/vital-vim-lua-string.vim on my Mac OS X for example.
+>
+    utf8: 0.066240 s
+    eval: 0.237707 s
+<
+
+=============================================================================
+FUNCTION				*Vital.Vim.Lua.String-function*
+
+			*Vital.Vim.Lua.String.expose()*
+.expose()
+	Expose 'vital_vim_lua_string' module into a global lua context.
+	See |Vital.Vim.Lua.String-module| for detail.
+
+
+=============================================================================
+MODULE					*Vital.Vim.Lua.String-module*
+
+			*Vital.Vim.Lua.String-module.strwidth()*
+vital_vim_lua_string.strwidth({text})
+	Returns the number of columns used to display the {text}.
+	It uses utf8.width() internally if available, otherwise it calls
+	|strwidth()| like:
+>
+	local width = vim.eval('strwidth("foobar")')
+<
+
+			*Vital.Vim.Lua.String-module.strchars()*
+vital_vim_lua_string.strchars({text})
+	Returns the number of characters in {text}.
+	It uses utf8.len() internally if available, otherwise it calls
+	|strchars()| like:
+>
+	local length = vim.eval('strchars("foobar")')
+<
+
+
+
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
