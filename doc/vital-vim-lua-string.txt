@@ -25,7 +25,18 @@ result of benchmark/vital-vim-lua-string.vim on my Mac OS X for example.
     utf8: 0.066240 s
     eval: 0.237707 s
 <
-
+Example usage is:
+>
+    lua << EOF
+    do
+      local M = vital_vim_lua_string
+      print(M.strwidth('AAAAAA')) --> 6
+      print(M.strchars('AAAAAA')) --> 6
+      print(M.strwidth('あいう')) --> 6
+      print(M.strchars('あいう')) --> 3
+    end
+    EOF
+<
 =============================================================================
 FUNCTION				*Vital.Vim.Lua.String-function*
 
